@@ -1,19 +1,37 @@
 
+#  Local imports
 import Components as c
+from login import login
+
 
 class Portfolio:
-    
-    def creaefile(self, name):
-        data = self.get_candidate_data()
+    def creaefile(self, name, data):
+        print('\tSetting the Data ')
+        data = self.get_candidate_data(data)
         with open(name + '.html', 'w+') as f:
+            print('\tWriting Data in file')
             f.write(data)
 
-    def get_candidate_data(self):
-        n1 = c.name_profession('adnan', 'researcher') 
-        e1 = c.experience_job_component('VisionX', 'Developer', 'I want to grow') 
-        e2 = c.experience_job_component('Arbisoft', 'Engineer', 'I am Learning Fast ')
-        part1 = c.DOCUMENT_START + c.HEAD + c.BODY_START + c.HEADER + n1 + c.about_section('About Content')
-        part2 = c.EXPERIENCE_SECTION_START + e1 + e2 + c.EXPERIENCE_SECTION_END
+    def get_candidate_data(self, data):
+        n1 = c.name_profession(data['name'], data['profession'])
+        explist = list() 
+        for exp in data['experience']:
+            pr = co = da = de = ''
+            print('\n Exp:\n ', exp, '\n' )
+            try:
+                if exp['profession']:   pr = exp['profession']
+                if exp['company']:      co = exp['company']
+                if exp['date']:         da = exp['date']
+                if exp['description']:  de = exp['description']
+            except:
+                pass
+            e = c.experience_job_component(pr, co, da, de) 
+            explist.append(e)
+        part1 = c.DOCUMENT_START + c.HEAD + c.BODY_START + c.HEADER + n1 + c.about_section(data['about'])
+        part2 = c.EXPERIENCE_SECTION_START
+        for exp in explist:
+            part2 += exp
+        part2 += c.EXPERIENCE_SECTION_END
         part3 = c.EDUCATION_SECTION_START + c.education_component('namal', 'BS CS', 'Four Year Bachelor Degree') + c.education_component('Air University', 'MS CYS', 'Capital Islamabad') + c.EDUCATION_SECTION_END
         part4 = c.PROJECT_SECTION_START + c.project_component('scrape', 'web scraping') + c.project_component('XSS Automation', "Detecting Vulnerbailties") + c.PROJECT_SECTION_END
         part5 = c.BODY_END + c.DOCUMENT_END
@@ -21,5 +39,10 @@ class Portfolio:
 
 
 if __name__ == "__main__":
+    #  Sign-in to the 
+    log = login()
+    log.sneak_in()
+    data = log.get_data()
     P = Portfolio()
-    P.creaefile('adnanshah')
+    P.creaefile('adnanshah', data)
+

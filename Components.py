@@ -142,13 +142,13 @@ def about_section(about_content):
             </div>
             '''
 
-def experience_job_component(company_name, job_title, paragraph):
+def experience_job_component(profession, company, date, description):
     return f'''
-            <div data-date="September 2015 – September 2016">
-                <h3> {company_name} </h3>
-                <h4>{job_title}</h4>
+            <div data-date="''' + date + f'''">
+                <h3> {company} </h3>
+                <h4>{profession}</h4>
                 <p>
-                    {paragraph}
+                    {description}
                 </p>
             </div>
             '''
