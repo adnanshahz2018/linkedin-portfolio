@@ -28,10 +28,9 @@ class login:
         elementID.submit()
         # Calling the Scrape function
         self.browser = browser
-        self.scrape_profile()
 
-    def scrape_profile(self):
-        self.browser.get('https://www.linkedin.com/in/adnanxshah/')
+    def scrape_profile(self, username):
+        self.browser.get(f'https://www.linkedin.com/in/{username}/')
         # Get scroll height
         last_height = self.browser.execute_script("return document.body.scrollHeight")
         for i in range(5):
@@ -50,6 +49,8 @@ class login:
         self.profile.set_source( (self.browser.page_source) )
         name = self.profile.get_name()
         self.data['name'] = name
+        profile_image = self.profile.get_profile_image()
+        self.data['profile_image'] = profile_image
         profession = self.profile.get_profession()
         self.data['profession'] = profession 
         about = self.profile.get_about()

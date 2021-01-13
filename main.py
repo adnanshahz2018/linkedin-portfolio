@@ -13,20 +13,34 @@ class Portfolio:
             f.write(data)
 
     def get_candidate_data(self, data):
-        n1 = c.name_profession(data['name'], data['profession'])
+        n1 = c.name_profession(data['name'], data['profession'], data['profile_image'])
         explist = list() 
         for exp in data['experience']:
-            pr = co = da = de = ''
+            pr = co = da = de = img = ''
             print('\n Exp:\n ', exp, '\n' )
             try:
                 if exp['profession']:   pr = exp['profession']
+            except:
+                pass
+            try:
                 if exp['company']:      co = exp['company']
+            except:
+                pass
+            try:
                 if exp['date']:         da = exp['date']
+            except:
+                pass
+            try:
                 if exp['description']:  de = exp['description']
             except:
                 pass
-            e = c.experience_job_component(pr, co, da, de) 
+            try:
+                if exp['image']:        img = exp['image']
+            except:
+                pass
+            e = c.experience_job_component(pr, co, da, de, img) 
             explist.append(e)
+            
         part1 = c.DOCUMENT_START + c.HEAD + c.BODY_START + c.HEADER + n1 + c.about_section(data['about'])
         part2 = c.EXPERIENCE_SECTION_START
         for exp in explist:
@@ -42,7 +56,12 @@ if __name__ == "__main__":
     #  Sign-in to the 
     log = login()
     log.sneak_in()
+    # log.scrape_profile('adnanxshah')
+    log.scrape_profile('salmannaseer')
     data = log.get_data()
+
+    # Create and Save Data in the .html file
     P = Portfolio()
-    P.creaefile('adnanshah', data)
+    # P.creaefile('adnanshah', data)
+    P.creaefile('salmannaseer', data)
 
