@@ -113,12 +113,13 @@ DOCUMENT_END = '''
 '''
 
 
-def name_profession(name, profession):
+def name_profession(name, profession, image):
     return f'''
             <div id="lead">
                 <div id="lead-content">
-                    <h1>{name}</h1>
-                    <h2>{profession}</h2>
+                    <img class="profile-image" alt="''' + name + f'''" src="''' + image + f'''" /> 
+                    <h2 style="color:black;">{name}</h2>
+                    <h3>{profession}</h3>
                 </div>
                 <div id="lead-overlay"></div>
             </div>
@@ -142,11 +143,22 @@ def about_section(about_content):
             </div>
             '''
 
-def experience_job_component(profession, company, date, description):
+def experience_job_component(profession, company, date, description, image):
+    print(' --------------------------------------------- \n Experience-Source:\n', image)
     return f'''
             <div data-date="''' + date + f'''">
+            <table>
+                <td>
+                <img src="''' + image + f'''" alt="''' + company + f'''" />
+                </td>
+                <td>
+                    <br>
+                </td>
+                <td>
                 <h3> {company} </h3>
                 <h4>{profession}</h4>
+                </td>
+                </table>
                 <p>
                     {description}
                 </p>
