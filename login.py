@@ -47,29 +47,12 @@ class login:
                 pass
 
         self.profile.set_source( (self.browser.page_source) )
-        name = self.profile.get_name()
-        self.data['name'] = name
-        profile_image = self.profile.get_profile_image()
-        self.data['profile_image'] = profile_image
-        profession = self.profile.get_profession()
-        self.data['profession'] = profession 
-        about = self.profile.get_about()
-        self.data['about'] = about
-        experience = self.profile.get_experience()
-        self.data['experience'] = experience
-        if experience is not None:
-            # print(profession)
-            # print(about)
-            for exp in experience:
-                # print(exp)
-                # print(exp['profession'])
-                # print(exp['company'])
-                # print(exp['date'])
-                # print(exp['description'])
-                pass
-        else:
-            time.sleep(1)
-            self.scrape_profile()
+        self.data['name']           = self.profile.get_name()
+        self.data['profile_image']  = self.profile.get_profile_image()
+        self.data['profession']     = self.profile.get_profession() 
+        self.data['about']          = self.profile.get_about()
+        self.data['experience']     = self.profile.get_experience()
+        self.data['education']      = self.profile.get_education()
 
     def get_assets(self):
         source = requests.get('https://github.com/adnanshahz2018/portfolio-assests/blob/main/README.md').text

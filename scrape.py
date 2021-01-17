@@ -1,5 +1,6 @@
 
 #  Python imports
+from Components import education_component
 from bs4 import BeautifulSoup
 
 
@@ -43,14 +44,8 @@ class scrape:
                 sec = lis.find('section')
             try:
                 img = sec.find('img')
-                # print(' ------------------------------------------------------------------------------------------------- \n Image-Source:\n', img['src'][0:10])
-                if str(img['src'][0:10]).__contains__('data:'):
-                    info['image'] = "images/blank.jpg"
-                elif not img['src']:
-                    info['image'] = "images/blank.jpg"
-                else:
-                    print(' ------------------------------------------------------------------------------------------------- \n Scrape-Source:\n', img['src'])
-                    info['image'] = img['src']
+                # print(' ------------------------------------------------------------------------------------------------- \n Scrape-Source:\n', img['src'])
+                info['image'] = img['src']
             except:
                 pass
             try:  
@@ -74,7 +69,6 @@ class scrape:
                 pass
             try:  
                 div = lis.find('div', attrs={'class':'pv-entity__extra-details t-14 t-black--light ember-view'})
-                
                 desc = div.find('p', attrs={'class': 'pv-entity__description t-14 t-black t-normal inline-show-more-text inline-show-more-text--is-collapsed ember-view'})
                 if not desc:
                     desc = div.find('p', attrs={'class': 'pv-entity__description t-14 t-black t-normal mb4 inline-show-more-text inline-show-more-text--is-collapsed ember-view'})
@@ -83,13 +77,50 @@ class scrape:
             except: 
                 pass
                 
-            exp_list.append(info)
+            if info:
+                exp_list.append(info)
         return exp_list
        
-
     def get_education(self):
-        return ''
-
+        edu_list = list()
+        education = self.soup.find('section', attrs={'id': 'education-section'})
+        education_list = education.find_all('li', attrs={'class': 'pv-profile-section__list-item pv-education-entity pv-profile-section__card-item ember-view'})
+        for lis in education_list:
+            info = {}
+            if not lis: continue
+            try:
+                img = lis.find('img')
+                # print(' ------------------------------------------------------------------------------------------------- \n Scrape-Source:\n', img['src'])
+                info['image'] = img['src']
+            except:
+                pass
+            try:  
+                uni = lis.find('h3', attrs={'class': 'pv-entity__school-name t-16 t-black t-bold'})
+                # print(' ------------------------------------------------------------------------------------------------- \n University:\n', uni.get_text())
+                info['univ'] = uni.get_text()
+            except: 
+                pass
+            try:   
+                data = lis.find_all('time')
+                date = data[0].get_text() + '-' + data[1].get_text()
+                # print(' ------------------------------------------------------------------------------------------------- \n date:\n', date)
+                info['date'] = date
+            except: 
+                pass
+            try: 
+                deg = '' 
+                spans = lis.find('span', attrs={'class':'pv-entity__comma-item'})
+                for s in spans:
+                    deg += s.get_text()
+                # print('------------------------------------------------------------------------------------------------- \n deg:\n', desc.get_text())
+                info['degree'] = deg.get_text()
+            except: 
+                pass
+                
+            if info:    
+                edu_list.append(info)
+        return edu_list
+       
     def get_project(self):
         return ''
 

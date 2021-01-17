@@ -6,7 +6,6 @@ from login import login
 
 class Portfolio:
     def creaefile(self, name, data):
-        print('\tSetting the Data ')
         data = self.get_candidate_data(data)
         with open(name + '.html', 'w+') as f:
             print('\tWriting Data in file')
@@ -46,10 +45,40 @@ class Portfolio:
         for exp in explist:
             part2 += exp
         part2 += c.EXPERIENCE_SECTION_END
-        part3 = c.EDUCATION_SECTION_START + c.education_component('namal', 'BS CS', 'Four Year Bachelor Degree') + c.education_component('Air University', 'MS CYS', 'Capital Islamabad') + c.EDUCATION_SECTION_END
+
+        edulist = list() 
+        for edu in data['education']:
+            uni = deg = date = img = ''
+            # print('\n Edu:\n ', edu, '\n' )
+            try:
+                if edu['univ']:    uni = edu['univ']
+            except:
+                pass
+            try:
+                if edu['date']:    date = edu['date']
+            except:
+                pass
+            try:
+                if edu['degree']:  deg = edu['degree']
+            except:
+                pass
+            try:
+                if edu['image']:   img = edu['image']
+            except:
+                pass
+            e = c.education_component(uni, deg, date, img) 
+            edulist.append(e)
+
+        part3 = c.EDUCATION_SECTION_START
+        for edu in edulist:
+            if edu: part3 += edu
+        part3 += c.EDUCATION_SECTION_END
+
         part4 = c.PROJECT_SECTION_START + c.project_component('scrape', 'web scraping') + c.project_component('XSS Automation', "Detecting Vulnerbailties") + c.PROJECT_SECTION_END
         part5 = c.BODY_END + c.DOCUMENT_END
-        return  part1 + part2 + part3 + part4 + part5
+
+        data =  part1 + part2 + part3 + part4 + part5
+        return data
 
 
 if __name__ == "__main__":

@@ -144,7 +144,6 @@ def about_section(about_content):
             '''
 
 def experience_job_component(profession, company, date, description, image):
-    print(' --------------------------------------------- \n Experience-Source:\n', image)
     return f'''
             <div data-date="''' + date + f'''">
             <table>
@@ -152,7 +151,7 @@ def experience_job_component(profession, company, date, description, image):
                 <img src="''' + image + f'''" alt="''' + company + f'''" />
                 </td>
                 <td>
-                    <br>
+                    &nbsp; &nbsp;
                 </td>
                 <td>
                 <h3> {company} </h3>
@@ -165,15 +164,19 @@ def experience_job_component(profession, company, date, description, image):
             </div>
             '''
 
-def education_component(university, degree, description):
+def education_component(university, degree, date, image):
     return f'''
             <div class="education-block">
-                <h3>{university}</h3>
-                <span class="education-date">Sept 2016 - Sept 2017</span>
-                <h4>{degree}</h4>
-                <p>
-                    {description}
-                </p>
+                <table>
+                    <td>
+                        <img src="''' + image + f'''" alt="''' + university + f'''" />
+                    </td>
+                    <span class="education-date">''' + date + f'''</span>
+                    <td>
+                        <h3>{university}</h3>
+                        <h4>{degree}</h4>
+                    <td>
+                </table>
             </div>
             '''
 
