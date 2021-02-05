@@ -86,11 +86,13 @@ if __name__ == "__main__":
     log = login()
     log.sneak_in()
     # log.scrape_profile('adnanxshah')
-    log.scrape_profile('salmannaseer')
+    # log.scrape_profile('salmannaseer')
+    log.scrape_profile('ibrahim-khan-3768a3183')
     data = log.get_data()
 
     # Create and Save Data in the .html file
     P = Portfolio()
     # P.creaefile('adnanshah', data)
-    P.creaefile('salmannaseer', data)
+    # P.creaefile('salmannaseer', data)
+    P.creaefile('ibrahimkhan', data)
 
